@@ -125,7 +125,7 @@ def get_user_choice() -> str:
 
 
 def print_blockchain_elements():
-    """Output the blockchain list to the console."""
+    """Output blockchain list to the console."""
     for block in blockchain:
         print('Outputting block')
         print(block)
@@ -159,7 +159,7 @@ while waiting_for_input:
         transaction_data = get_transaction_data()
         recipient, amount = transaction_data
         if add_transaction(recipient, amount=amount):
-            print('Transaction added.')
+            print('Transaction added.') 
         else:
             print('Transaction failed.')
         print(open_transactions)
@@ -192,7 +192,7 @@ while waiting_for_input:
         print_blockchain_elements()
         print('Invalid blockchain!')
         break
-    print(get_balance(owner))
+    print('Balance of {}: {:6.2f}'.format(owner, get_balance(owner)))
 else:
     print('User left!')
 
