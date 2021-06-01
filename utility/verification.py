@@ -1,9 +1,9 @@
-from hash_util import hash_string_256, hash_block
+from utility.hash_util import hash_string_256, hash_block
 
 
 class Verification:
-
-    def valid_proof(self, transactions, last_hash, proof) -> bool:
+    @staticmethod
+    def valid_proof(transactions, last_hash, proof) -> bool:
         """Validate a proof of work number and see if it solves the puzzle
         algorithm (two leading 0s).
 
@@ -30,26 +30,29 @@ class Verification:
         # control the speed at which new blocks can be added)
         return guess_hash[0:2] == '00'
 
-    def verify_chain(self, blockchain) -> bool:
+    @classmethod
+    def verify_chain(cls, blockchain) -> bool:
         """Verify blockchain integrity. Return False if it is corrupted."""
         for (index, block) in enumerate(blockchain):
             if index == 0:
                 continue
             if block.previous_hash != hash_block(blockchain[index - 1]):
                 return False
-            if not self.valid_proof(block.transactions[:-1], block.previous_hash,
-                                    block.proof):
+            if not cls.valid_proof(block.transactions[:-1], block.previous_hash,
+                                   block.proof):
                 print('Proof of work is invalid')
                 return False
             return True
 
-    def verify_transaction(self, transaction: dict, get_balance) -> bool:
+    @staticmethod
+    def verify_transaction(transaction: dict, get_balance) -> bool:
         """Verify if sender has enough balance to send transaction's amount."""
         sender_balance = get_balance()
         return sender_balance >= transaction.amount
 
-    def verify_transactions(self, open_transactions: list) -> bool:
+    @classmethod
+    def verify_transactions(cls, open_transactions: list, get_balance) -> bool:
         """Verify all open transactions."""
-        return all([self.verify_transaction(tx, get_balance)
+        return all([cls.verify_transaction(tx, get_balance)
                     for tx in open_transactions
                     ])
