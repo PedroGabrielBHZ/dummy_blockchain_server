@@ -8,4 +8,8 @@ This is a project I have great interest in further developing and launching as a
 
 ## Running
 Run node.py in your environment. A server is then launched on localhost:5000.
-Pretty simple.
+To run multiple nodes, run multiple instances of node.py specifying a port with:
+
+```<python> node.py -p <port>```
+
+Each node's wallet and copy of the blockchain is stored locally, this needs working on.
