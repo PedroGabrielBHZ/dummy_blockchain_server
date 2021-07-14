@@ -2,7 +2,7 @@
 # inspired and adapted from Schwarzmueller Udemy Python course.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 #  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 #  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
@@ -130,11 +130,13 @@ def broadcast_block():
             response = {'message': 'Block seems invalid.'}
             return jsonify(response), 409
     elif block['index'] > blockchain.chain[-1].index:
-        response = {'message': 'Blockchain seems to differ from local blockchain.'}
+        response = {
+            'message': 'Blockchain seems to differ from local blockchain.'}
         blockchain.resolve_conflicts = True
         return jsonify(response), 200
-    else: 
-        response = {'message': 'Blockchain seems to be shorter, block not added'}
+    else:
+        response = {
+            'message': 'Blockchain seems to be shorter, block not added'}
         return jsonify(response), 409
 
 

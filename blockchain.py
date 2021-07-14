@@ -2,7 +2,7 @@
 # inspired and adapted from Schwarzmueller Udemy Python course.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 #  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 #  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
@@ -69,10 +69,7 @@ class Blockchain:
         """Initialize blockchain + open transactions data from a file."""
         try:
             with open('blockchain-{}.txt'.format(self.node_id), mode='r') as f:
-                # file_content = pickle.loads(f.read())
                 file_content = f.readlines()
-                # blockchain = file_content['chain']
-                # open_transactions = file_content['ot']
                 blockchain = json.loads(file_content[0][:-1])
                 # We need to convert  the loaded data because Transactions should use OrderedDict
                 updated_blockchain = []
@@ -110,11 +107,6 @@ class Blockchain:
                 f.write(json.dumps(saveable_tx))
                 f.write('\n')
                 f.write(json.dumps(list(self.__peer_nodes)))
-                # save_data = {
-                #     'chain': blockchain,
-                #     'ot': open_transactions
-                # }
-                # f.write(pickle.dumps(save_data))
         except IOError:
             print('Saving failed!')
 
@@ -176,13 +168,6 @@ class Blockchain:
             recipient: The recipient of the coins.
             amount: The amount of coins sent with the transaction (default = 1.0)
         """
-        # transaction = {
-        #     'sender': sender,
-        #     'recipient': recipient,
-        #     'amount': amount
-        # }
-        # if self.public_key == None:
-        #     return False
         transaction = Transaction(sender, recipient, signature, amount)
         if Verification.verify_transaction(transaction, self.get_balance):
             self.__open_transactions.append(transaction)
@@ -289,7 +274,7 @@ class Blockchain:
                 # Convert the dictionary list to a list of block AND transaction objects
                 node_chain = [Block(block['index'], block['previous_hash'], [Transaction(
                     tx['sender'], tx['recipient'], tx['signature'], tx['amount']) for tx in block['transactions']],
-                                    block['proof'], block['timestamp']) for block in node_chain]
+                    block['proof'], block['timestamp']) for block in node_chain]
                 node_chain_length = len(node_chain)
                 local_chain_length = len(winner_chain)
                 # Store the received chain as the current winner chain if it's longer AND valid
