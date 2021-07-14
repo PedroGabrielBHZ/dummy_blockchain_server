@@ -10,9 +10,9 @@ class Verification:
         """Validate a proof of work number and see if it solves the puzzle algorithm (two leading 0s)
 
         Arguments:
-            :transactions: The transactions of the block for which the proof is created.
-            :last_hash: The previous block's hash which will be stored in the current block.
-            :proof: The proof number we're testing.
+            transactions: The transactions of the block for which the proof is created.
+            last_hash: The previous block's hash which will be stored in the current block.
+            proof: The proof number we're testing.
         """
         # Create a string with all the hash inputs
         guess = (str([tx.to_ordered_dict() for tx in transactions]) + str(last_hash) + str(proof)).encode()
@@ -41,7 +41,7 @@ class Verification:
         """Verify a transaction by checking whether the sender has sufficient coins.
 
         Arguments:
-            :transaction: The transaction that should be verified.
+            transaction: The transaction that should be verified.
         """
         if check_funds:
             sender_balance = get_balance(transaction.sender)

@@ -32,9 +32,9 @@ class Blockchain:
     """The Blockchain class manages the chain of blocks as well as open transactions and the node on which it's running.
 
     Attributes:
-        :chain: The list of blocks
-        :open_transactions (private): The list of open transactions
-        :hosting_node: The connected node (which runs the blockchain).
+        chain: The list of blocks
+        open_transactions (private): The list of open transactions
+        hosting_node: The connected node (which runs the blockchain).
     """
 
     def __init__(self, public_key, node_id):
@@ -172,9 +172,9 @@ class Blockchain:
         """ Append a new value as well as the last blockchain value to the blockchain.
 
         Arguments:
-            :sender: The sender of the coins.
-            :recipient: The recipient of the coins.
-            :amount: The amount of coins sent with the transaction (default = 1.0)
+            sender: The sender of the coins.
+            recipient: The recipient of the coins.
+            amount: The amount of coins sent with the transaction (default = 1.0)
         """
         # transaction = {
         #     'sender': sender,
@@ -310,7 +310,7 @@ class Blockchain:
         """Adds a new node to the peer node set.
 
         Arguments:
-            :node: The node URL which should be added.
+            node: The node URL which should be added.
         """
         self.__peer_nodes.add(node)
         self.save_data()
@@ -319,7 +319,7 @@ class Blockchain:
         """Removes a node from the peer node set.
 
         Arguments:
-            :node: The node URL which should be removed.
+            node: The node URL which should be removed.
         """
         self.__peer_nodes.discard(node)
         self.save_data()

@@ -66,9 +66,9 @@ class Wallet:
         """Sign a transaction and return the signature.
 
         Arguments:
-            :sender: The sender of the transaction.
-            :recipient: The recipient of the transaction.
-            :amount: The amount of the transaction.
+            sender: The sender of the transaction.
+            recipient: The recipient of the transaction.
+            amount: The amount of the transaction.
         """
         signer = PKCS1_v1_5.new(RSA.importKey(binascii.unhexlify(self.private_key)))
         h = SHA256.new((str(sender) + str(recipient) + str(amount)).encode('utf8'))
@@ -80,7 +80,7 @@ class Wallet:
         """Verify the signature of a transaction.
 
         Arguments:
-            :transaction: The transaction that should be verified.
+            transaction: The transaction that should be verified.
         """
         public_key = RSA.importKey(binascii.unhexlify(transaction.sender))
         verifier = PKCS1_v1_5.new(public_key)
