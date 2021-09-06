@@ -4,9 +4,9 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-#  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
-#  IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+# IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from functools import reduce
 import hashlib as hl
@@ -29,11 +29,12 @@ print(__name__)
 
 
 class Blockchain:
-    """The Blockchain class manages the chain of blocks as well as open transactions and the node on which it's running.
+    """The Blockchain class manages the chain of blocks as well as open
+    transactions and the node on which it's running.
 
     Attributes:
-        chain: The list of blocks
-        open_transactions (private): The list of open transactions
+        chain: The list of blocks.
+        open_transactions (private): The list of open transactions.
         hosting_node: The connected node (which runs the blockchain).
     """
 
@@ -51,7 +52,8 @@ class Blockchain:
         self.resolve_conflicts = False
         self.load_data()
 
-    # This turns the chain attribute into a property with a getter (the method below) and a setter (@chain.setter)
+    # This turns the chain attribute into a property with a getter
+    # (the method below) and a setter (@chain.setter)
     @property
     def chain(self):
         return self.__chain[:]
@@ -115,7 +117,9 @@ class Blockchain:
             print('Saving failed!')
 
     def proof_of_work(self):
-        """Generate a proof of work for the open transactions, the hash of the previous block and a random number (which is guessed until it fits)."""
+        """Generate a proof of work for the open transactions, the hash
+        of the previous block and a random number (which is guessed until it fits).
+        """
         last_block = self.__chain[-1]
         last_hash = hash_block(last_block)
         proof = 0
@@ -133,11 +137,14 @@ class Blockchain:
             participant = self.public_key
         else:
             participant = sender
-        # Fetch a list of all sent coin amounts for the given person (empty lists are returned if the person was NOT the sender)
-        # This fetches sent amounts of transactions that were already included in blocks of the blockchain
+        # Fetch a list of all sent coin amounts for the given person
+        # (empty lists are returned if the person was NOT the sender).
+        # This fetches sent amounts of transactions that were already
+        # included in blocks of the blockchain
         tx_sender = [[tx.amount for tx in block.transactions
                       if tx.sender == participant] for block in self.__chain]
-        # Fetch a list of all sent coin amounts for the given person (empty lists are returned if the person was NOT the sender)
+        # Fetch a list of all sent coin amounts for the given person
+        # (empty lists are returned if the person was NOT the sender).
         # This fetches sent amounts of open transactions (to avoid double spending)
         open_tx_sender = [tx.amount
                           for tx in self.__open_transactions if tx.sender == participant]
@@ -145,8 +152,10 @@ class Blockchain:
         print(tx_sender)
         amount_sent = reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt)
                              if len(tx_amt) > 0 else tx_sum + 0, tx_sender, 0)
-        # This fetches received coin amounts of transactions that were already included in blocks of the blockchain
-        # We ignore open transactions here because you shouldn't be able to spend coins before the transaction was confirmed + included in a block
+        # This fetches received coin amounts of transactions that were
+        # already included in blocks of the blockchain.
+        # We ignore open transactions here because you shouldn't be able
+        # to spend coins before the transaction was confirmed + included in a block.
         tx_recipient = [[tx.amount for tx in block.transactions
                          if tx.recipient == participant] for block in self.__chain]
         amount_received = reduce(lambda tx_sum, tx_amt: tx_sum + sum(tx_amt)
@@ -163,7 +172,6 @@ class Blockchain:
     # This function accepts two arguments.
     # One required one (transaction_amount) and one optional one (last_transaction)
     # The optional one is optional because it has a default value => [1]
-
     def add_transaction(self, recipient, sender, signature, amount=1.0, is_receiving=False):
         """ Append a new value as well as the last blockchain value to the blockchain.
 
